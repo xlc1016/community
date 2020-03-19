@@ -8,12 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("hello")
-public class HelloCotroller {
+public class IndexController {
 
-    @GetMapping("/hello")
-    public String hello(@RequestParam(name = "name") String name, Model mode) {
-        mode.addAttribute("name", name);
-        return "hello";
+    @GetMapping("/")
+    public String index(String name, Model mode) {
+     //   mode.addAttribute("name", name);
+        return "index";
     }
 }
