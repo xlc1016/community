@@ -38,11 +38,16 @@ public class GitHubProvider {
                 .build();
         try (Response response = client.newCall(request).execute()) {
             String string =  response.body().string();
-            String[] split = string.split("=");
-            String token = split[1];
-            // access_token=8d211c0c1040c503e8b33d5d4ea24acb6d12c661&scope=user&token_type=bearer
-            System.out.println(token);
-            return  token;
+            if(string != null) {
+                String[] split = string.split("=");
+                String token = split[1];
+                String[] tokenStr = token.split("&");
+                // access_token=8d211c0c1040c503e8b33d5d4ea24acb6d12c661&scope=user&token_type=bearer
+                //System.out.println(tokenStr[0]);
+                return tokenStr[0];
+            }else{
+                return null;
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
