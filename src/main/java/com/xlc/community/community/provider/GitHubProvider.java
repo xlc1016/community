@@ -8,8 +8,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 
 import java.io.IOException;
-
-
 /**
 * @author :xlc
 * @date: 2020-3-19
@@ -42,8 +40,6 @@ public class GitHubProvider {
                 String[] split = string.split("=");
                 String token = split[1];
                 String[] tokenStr = token.split("&");
-                // access_token=8d211c0c1040c503e8b33d5d4ea24acb6d12c661&scope=user&token_type=bearer
-                //System.out.println(tokenStr[0]);
                 return tokenStr[0];
             }else{
                 return null;
@@ -64,7 +60,6 @@ public class GitHubProvider {
             String string = response.body().string();
             // jsonfast 将字json符串转换为对象
             GithubUser githubUser = JSON.parseObject(string, GithubUser.class);
-
             return  githubUser;
 
         } catch (IOException e) {

@@ -1,6 +1,8 @@
 package com.xlc.community.community.controller;
 
 import com.xlc.community.community.dto.AccessTokenDTO;
+import com.xlc.community.community.mapper.UserMapper;
+import com.xlc.community.community.model.User;
 import com.xlc.community.community.provider.GitHubProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.thymeleaf.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Date;
+import java.util.UUID;
 
 /**
 * @author :xlc
@@ -34,6 +38,8 @@ public class AuthorController {
     @Value("${gitHub.redirect_uri}")
     private String redirect_uri;
 
+    @Autowired
+    private UserMapper userMapper;
 
     @GetMapping("/callback")
     public String callback(@RequestParam (name= "code") String code
@@ -47,13 +53,23 @@ public class AuthorController {
         accessTokenDTO.setClient_secret(client_secret);
         // 获得token
         String token = gitHubProvider.getAccessToken(accessTokenDTO);
+        GithubUser githubUser = null;
         // 获取github的user对象
-        GithubUser user = gitHubProvider.getUser(token);
+        if (token != null) {
+            githubUser = gitHubProvider.getUser(token);
+        }
          // 判断对象 不为空登录成功
-        if(user != null){
+        if(githubUser != null){
+            // 将数据存入数据库
+            User user = new User();
+            user.setToken(UUID.randomUUID().toString());
+            user.setAccountId(String.valueOf(githubUser.getId()));
+            user.setName(githubUser.getName());
+            user.setGmtCreate(new Date());
+            user.setGmtModified(user.getGmtCreate());
+            userMapper.insert(user);
             // 登录成功  从session中获取user 对象
-         request.getSession().setAttribute("user",user);
-           // request.setAttribute("user",user);
+         request.getSession().setAttribute("user",githubUser);
             // 登录成功后重定向到index 页面
             return "redirect:/";
 

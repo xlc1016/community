@@ -14,4 +14,8 @@ https://www.visual-paradigm.com
 
 #okHttp
 https://square.github.io/okhttp/calls/
+# H2 数据库
+www.h2database.com
+# spring boot 默认 jdbc 
+https://docs.spring.io/spring-boot/docs/2.0.0.RC1/reference/htmlsingle/#boot-features-features-embedded-database
 
