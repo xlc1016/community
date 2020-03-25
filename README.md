@@ -18,4 +18,12 @@ https://square.github.io/okhttp/calls/
 www.h2database.com
 # spring boot 默认 jdbc 
 https://docs.spring.io/spring-boot/docs/2.0.0.RC1/reference/htmlsingle/#boot-features-features-embedded-database
+# spring 注解
+@Configuration是spring.xml的注解版。
+@ComponentScan是<context:component-scan base-package="com.coshaho.*" />标签的注解版。
+@ImportResource @Import是<import resource>标签的注解版。
+@PropertySource是<context:property-placeholder location="classpath:jdbc.properties"/>标签的注解版。
+@Bean是<bean>标签的注解版。
+@EnableTransactionManagement是tx:annotation-driven标签的注解版。
+
 

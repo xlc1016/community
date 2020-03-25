@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.annotation.Generated;
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -15,7 +16,7 @@ import java.util.Date;
 */
 @Repository
 @Table(name = "user")
-public class User {
+public class User  implements Serializable {
 
     @Id
     private Integer id;

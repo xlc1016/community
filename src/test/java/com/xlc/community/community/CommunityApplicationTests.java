@@ -2,10 +2,13 @@ package com.xlc.community.community;
 
 import com.xlc.community.community.mapper.UserMapper;
 import com.xlc.community.community.model.User;
+import com.xlc.community.community.util.RedisUtil;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 
 import java.util.Date;
 import java.util.UUID;
@@ -21,6 +24,9 @@ class CommunityApplicationTests {
 	@Autowired(required=true)
 	private UserMapper userMapper;
 
+	@Autowired
+    private RedisTemplate redisTemplate;
+
 	@Test
 	public void insert(){
 
@@ -30,8 +36,20 @@ class CommunityApplicationTests {
 		user.setAccountId("123366455");
 		user.setGmtCreate(new Date());
 		user.setGmtModified(user.getGmtCreate());
-		this.userMapper.insert(user);
+        ValueOperations valueOperations = redisTemplate.opsForValue();
+        valueOperations.set("getHubUser", user);
+
+        //this.userMapper.insert(user);
 
 	}
+
+   @Test
+	public  void  testRedis(){
+        Boolean getHubUser = redisTemplate.hasKey("getHubUser");
+        if (getHubUser == true){
+            User user  =(User) redisTemplate.opsForValue().get("getHubUser");
+            System.out.println(user.getName());
+        }
+    }
 
 }
