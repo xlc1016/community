@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.thymeleaf.util.StringUtils;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
 import java.util.UUID;
 
@@ -43,7 +45,7 @@ public class AuthorController {
 
     @GetMapping("/callback")
     public String callback(@RequestParam (name= "code") String code
-            , @RequestParam(name="state") String state , HttpServletRequest request){
+            , @RequestParam(name="state") String state , HttpServletRequest request, HttpServletResponse response){
 
         AccessTokenDTO accessTokenDTO = new AccessTokenDTO();
         accessTokenDTO.setCode(code);
@@ -62,14 +64,16 @@ public class AuthorController {
         if(githubUser != null){
             // 将数据存入数据库
             User user = new User();
-            user.setToken(UUID.randomUUID().toString());
+            String token1 = UUID.randomUUID().toString();
+            user.setToken(token1);
             user.setAccountId(String.valueOf(githubUser.getId()));
             user.setName(githubUser.getName());
             user.setGmtCreate(new Date());
             user.setGmtModified(user.getGmtCreate());
             userMapper.insert(user);
-            // 登录成功  从session中获取user 对象
-         request.getSession().setAttribute("user",githubUser);
+            //将用户的token 存入cookie 中
+            response.addCookie(new Cookie("token",token1));
+
             // 登录成功后重定向到index 页面
             return "redirect:/";
 
