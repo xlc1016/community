@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.xlc.community.community.mapper.QuestionMapper">
+    
+    <insert id="create" parameterType="com.xlc.community.community.model.Question">
+
+      insert INTO  question(title,description,gmt_create,gmt_modified,creator,tag)
+      VALUES (#{title},#{description},#{gmtCreate},#{gmtModified},#{creator},#{tag});
+
+    </insert>
+
+</mapper>

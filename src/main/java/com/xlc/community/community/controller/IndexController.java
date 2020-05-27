@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 @Controller
 public class IndexController {
 
-    @Autowired(required = true)
+    @Autowired
     private UserMapper userMapper;
 
     @Autowired

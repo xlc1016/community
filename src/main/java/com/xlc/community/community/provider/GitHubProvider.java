@@ -23,7 +23,7 @@ public class GitHubProvider {
         /**
         * @author :xlc
         * @date: 2020-3-19
-        * @description: okhttp 的post 请求
+        * @description: okhttp 的post 请求    获得token
          */
         MediaType mediaType = MediaType.get("application/json; charset=utf-8");
         OkHttpClient client = new OkHttpClient();
@@ -49,6 +49,11 @@ public class GitHubProvider {
         }
         return  null;
     }
+    /**
+    * @author :xlc
+    * @date: 2020-5-20
+    * @description:  获得 gitHub的信息
+    */
 
     public GithubUser  getUser(String accessToken){
         OkHttpClient client = new OkHttpClient();

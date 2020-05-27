@@ -30,6 +30,8 @@ public class User  implements Serializable {
     private Date gmtCreate;
     @Column(name="gmtModified")
     private Date gmtModified;
+    @Column(name = "bio")
+    private String bio;
 
     public Integer getId() {
         return id;
@@ -77,5 +79,26 @@ public class User  implements Serializable {
 
     public void setGmtModified(Date gmtModified) {
         this.gmtModified = gmtModified;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", accountId='" + accountId + '\'' +
+                ", token='" + token + '\'' +
+                ", gmtCreate=" + gmtCreate +
+                ", gmtModified=" + gmtModified +
+                ", bio='" + bio + '\'' +
+                '}';
     }
 }
