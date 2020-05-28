@@ -57,15 +57,15 @@
             <form action="/publish" method="post">
                 <div class="form-group">
                     <label for="title">问题标题(简单扼要)：</label>
-                    <input type="text" class="form-control" id="title" name="title" placeholder="问题标题。。。">
+                    <input type="text" class="form-control" id="title" th:value="${title}"  name="title" placeholder="问题标题。。。">
                 </div>
                 <div class="form-group">
                     <label for="description">问题标题(必填，请参照右侧提示)：</label>
-                    <textarea name="description" id="description" cols="30" rows="10"  class="form-control" ></textarea>
+                    <textarea name="description" id="description" cols="30" rows="10" th:value="${description}"  class="form-control" ></textarea>
                 </div>
                 <div class="form-group">
                     <label for="tag">添加标签：</label>
-                    <input type="text" name="tag" id="tag" class="form-control"  placeholder="添加标签以逗号隔开。" />
+                    <input type="text" name="tag" id="tag" class="form-control" th:value="${tag}" placeholder="添加标签以逗号隔开。" />
                 </div>
                 <div class="container-fluid main">
                     <div class="row">

@@ -9,6 +9,7 @@ public class GithubUser {
     private Long id; // gitHub id
     private String name;
     private String bio; // gitbub 个人描述
+    private String avatarUrl;
 
     public Long getId() {
         return id;
@@ -32,5 +33,13 @@ public class GithubUser {
 
     public void setBio(String bio) {
         this.bio = bio;
+    }
+
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
     }
 }

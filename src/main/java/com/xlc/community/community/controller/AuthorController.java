@@ -87,6 +87,8 @@ public class AuthorController {
                     user.setName(githubUser.getName());
                     user.setGmtCreate(new Date());
                     user.setGmtModified(user.getGmtCreate());
+                    user.setAvatarUrl(githubUser.getAvatarUrl());
+                    user.setBio(githubUser.getBio());
                     userMapper.insert(user);
                     // 同时将用户信息存入到redis 中
                     ValueOperations valueOperations = redisTemplate.opsForValue();

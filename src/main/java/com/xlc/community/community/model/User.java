@@ -32,6 +32,9 @@ public class User  implements Serializable {
     private Date gmtModified;
     @Column(name = "bio")
     private String bio;
+    @Column(name = "AVATARURL")
+    private String avatarUrl;
+
 
     public Integer getId() {
         return id;
@@ -89,6 +92,14 @@ public class User  implements Serializable {
         this.bio = bio;
     }
 
+    public String getAvatarUrl() {
+        return avatarUrl;
+    }
+
+    public void setAvatarUrl(String avatarUrl) {
+        this.avatarUrl = avatarUrl;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -99,6 +110,7 @@ public class User  implements Serializable {
                 ", gmtCreate=" + gmtCreate +
                 ", gmtModified=" + gmtModified +
                 ", bio='" + bio + '\'' +
+                ", avatarUrl='" + avatarUrl + '\'' +
                 '}';
     }
 }
