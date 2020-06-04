@@ -5,6 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/community.css">
     <script type="text/javascript" href="js/bootstrap.min.js"></script>
 
 </head>
@@ -48,6 +49,68 @@
         </div>
     </div>
 </nav>
+<div class="container-fluid main">
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-xs-12 col-sm-12"  >
+            <h2><span class="glyphicon glyphicon-list" aria-hidden="true"></span>发现</h2>
+            <hr/>
+            <div class="media" th:each="question:${pageDTO.list}">
+                <div class="media-left">
+                    <a href="#">
+                        <img class="media-object img-set" th:src="${question.user.avatarUrl}"/>
+                    </a>
+                </div>
+                <div class="media-body">
+                    <h4 class="media-heading" th:text="${question.title}"></h4>
+                    <span th:text="${question.description}"></span><br/>
+                    <span class="text-desc">
+                        <span th:text="${question.commentCount}"></span>个回复.
+                        <span th:text="${question.viewCount}"></span>浏览次数.
+                        <span th:text="${#dates.format(question.gmtCreate,'yyyy-MM-dd')}"></span>
+                    </span>
+                </div>
+            </div>
+
+            <nav aria-label="Page navigation" style="float: right">
+                <ul class="pagination">
+                    <li th:if="${pageDTO.showFirstPage}">
+                        <a href="/?currentPage = 1 "  aria-label="Previous">
+                            <span aria-hidden="true">&lt;&lt;</span>
+                        </a>
+                    </li>
+                    <li th:if="${pageDTO.showPrevious}">
+                        <a href="#" th:href="@{/(currentPage=${pageDTO.currentPage - 1})}" aria-label="Previous">
+                            <span aria-hidden="true">&lt;</span>
+                        </a>
+                    </li>
+                    <li th:each="page:${pageDTO.pages}" th:class="${pageDTO.currentPage == page}?'active' : ''" >
+                        <a href="#"  th:href="@{/(currentPage=${page})}" th:text="${page}"></a>
+                    </li>
+
+                    <li th:if="${pageDTO.showNext}">
+                        <a href="#" th:href="@{/(currentPage=${pageDTO.currentPage + 1})}" aria-label="Previous">
+                            <span aria-hidden="true">&gt;</span>
+                        </a>
+                    </li>
+                    <li th:if="${pageDTO.showEndPage}">
+                        <a href="#" th:href="@{/(currentPage=${pageDTO.totalPage})}" aria-label="Previous">
+                            <span aria-hidden="true">&gt;&gt;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+
+        </div>
+
+
+        <div class="col-lg-3 col-md-12 col-xs-12 col-sm-12" >
+            <h3>热门话题</h3>
+            ;;;;;;;
+        </div>
+    </div>
+</div>
+
 
 </body>
 </html>

@@ -26,4 +26,7 @@ public interface UserMapper {
     User findByAccountId(@Param("accountId") Long id);
     @Update("update user set gmtModified = #{gmtModified} where id = #{id}  ")
     void update(User user);
+
+    @Select(" select * from user where accountId= #{accountId}")
+    User findByAccountId2(@Param("accountId") String accountId);
 }
