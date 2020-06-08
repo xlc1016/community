@@ -27,7 +27,6 @@ public class QuestionDTOServiceImpl
     public PageDTO findAll(Integer currentPage,Integer pageSize ) {
 
         PageDTO pageDTO = new PageDTO();
-        List<QuestionDTO> dtoList = new ArrayList<>();
         int count = questionService.count(); // 总页数
         // 反正手动传页面
         if (currentPage < 1){
@@ -41,16 +40,61 @@ public class QuestionDTOServiceImpl
 
         int page = pageSize*(currentPage -1 );
         List<Question> list = questionService.pageList(page,pageSize);
+
+        List<QuestionDTO> questionDTO = getQuestionDTO(list);
+        pageDTO.setList(questionDTO);
+
+
+        return pageDTO;
+    }
+
+    
+    /**
+    * @author :xlc
+    * @date: 2020-6-5
+    * @description: 根据用户名分页查询
+    */
+    public PageDTO listByUser(String accountId, Integer currentPage, Integer pageSize) {
+
+        PageDTO pageDTO = new PageDTO();
+
+         Integer creator =  Integer.valueOf(accountId);
+
+        int count = questionService.countByUser(creator); // 总页数
+        // 反正手动传页面
+        if (currentPage < 1){
+            currentPage = 1;
+        }
+        pageDTO.setPage(count,pageSize,currentPage);
+
+        if(currentPage >= pageDTO.getTotalPage() ){
+            currentPage = pageDTO.getTotalPage();
+        }
+        int page = pageSize*(currentPage -1 );
+        List<Question> list = questionService.pageListByUser(creator,page,pageSize);
+
+        List<QuestionDTO> questionDTO = getQuestionDTO(list);
+
+        pageDTO.setList(questionDTO);
+
+        return pageDTO;
+
+    }
+
+    private   List<QuestionDTO>  getQuestionDTO(List<Question> list){
+
+        List<QuestionDTO> dtoList = new ArrayList<>();
+
         for (Question question : list) {
+
             User user = userMapper.findByAccountId2(Integer.toString(question.getCreator()));
             QuestionDTO questionDTO = new QuestionDTO();
             questionDTO.setUser(user);
             BeanUtils.copyProperties(question,questionDTO);
             dtoList.add(questionDTO);
         }
-        pageDTO.setList(dtoList);
 
+        return dtoList;
 
-        return pageDTO;
     }
 }

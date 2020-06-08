@@ -44,4 +44,18 @@ public class QuestionServiceImpl implements IQuestionService {
         int count = questionMapper.count();
         return count;
     }
+
+    @Override
+    public int countByUser(Integer creator) {
+
+        int count = questionMapper.countByUser(creator);
+        return count;
+    }
+
+    @Override
+    public List<Question> pageListByUser(Integer creator, Integer currentPage, Integer pageSize) {
+
+        List<Question> list = questionMapper.pageListByUser(creator, currentPage, pageSize);
+        return list;
+    }
 }

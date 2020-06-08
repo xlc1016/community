@@ -20,4 +20,11 @@ public interface QuestionMapper {
      // 查询共计多少条
      public int count();
 
+    // 查询共计多少条（根据用户命）
+    public int countByUser(@Param("creator") Integer creator );
+
+
+    List<Question> pageListByUser(@Param("creator") Integer creator, @Param("currentPage") Integer currentPage,
+                                  @Param("pageSize") Integer pageSize);
+
 }

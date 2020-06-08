@@ -33,8 +33,19 @@
     <select id="pageList" resultMap="questionMap">
         select *  from  question limit #{currentPage},#{pageSize};
     </select>
+
     <select id="count"  resultType="int" >
         select count(1) from question ;
     </select>
+
+    <select id="countByUser"  resultType="int" >
+        select count(1) from question where  1=1  and  creator = #{creator} ;
+    </select>
+
+    <select id="pageListByUser" resultMap="questionMap">
+        select *  from  question   where  1=1 and  creator = #{creator}  limit #{currentPage},#{pageSize};
+    </select>
+
+
 
 </mapper>
