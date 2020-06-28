@@ -27,4 +27,8 @@ public interface QuestionMapper {
     List<Question> pageListByUser(@Param("creator") Integer creator, @Param("currentPage") Integer currentPage,
                                   @Param("pageSize") Integer pageSize);
 
+
+    // 根据id查询
+    Question findById(@Param("id") Integer id);
+
 }

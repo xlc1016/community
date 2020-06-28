@@ -25,6 +25,16 @@ https://docs.spring.io/spring-boot/docs/2.0.0.RC1/reference/htmlsingle/#boot-fea
 @PropertySource是<context:property-placeholder location="classpath:jdbc.properties"/>标签的注解版。
 @Bean是<bean>标签的注解版。
 @EnableTransactionManagement是tx:annotation-driven标签的注解版。
-# ssss
+# 创建User sql
+CREATE TABLE USER (
+	id INT auto_increment PRIMARY KEY NOT NULL,
+	accountId VARCHAR (100),
+	NAME VARCHAR (50),
+	token VARCHAR (36),
+	gmtCreate BIGINT,
+	gmtModified BIGINT,
+	avatarUrl VARCHAR (100)
+);
+
 
 

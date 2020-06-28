@@ -58,4 +58,9 @@ public class QuestionServiceImpl implements IQuestionService {
         List<Question> list = questionMapper.pageListByUser(creator, currentPage, pageSize);
         return list;
     }
+
+    @Override
+    public Question findById(Integer id) {
+        return questionMapper.findById(id);
+    }
 }

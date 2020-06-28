@@ -28,7 +28,7 @@ public class QuestionDTOServiceImpl
 
         PageDTO pageDTO = new PageDTO();
         int count = questionService.count(); // 总页数
-        // 反正手动传页面
+        // 防止手动传页面
         if (currentPage < 1){
             currentPage = 1;
         }
@@ -39,6 +39,9 @@ public class QuestionDTOServiceImpl
         }
 
         int page = pageSize*(currentPage -1 );
+        if (page <= 0) {
+            page = 0;
+        }
         List<Question> list = questionService.pageList(page,pageSize);
 
         List<QuestionDTO> questionDTO = getQuestionDTO(list);
@@ -61,7 +64,7 @@ public class QuestionDTOServiceImpl
          Integer creator =  Integer.valueOf(accountId);
 
         int count = questionService.countByUser(creator); // 总页数
-        // 反正手动传页面
+        // 防止手动传页面
         if (currentPage < 1){
             currentPage = 1;
         }
@@ -96,5 +99,19 @@ public class QuestionDTOServiceImpl
 
         return dtoList;
 
+    }
+    /**
+    * @author :xlc
+    * @date: 2020-6-9
+    * @description:  根据id查询
+    */
+
+    public QuestionDTO findById(Integer id) {
+        Question question = questionService.findById(id);
+        QuestionDTO questionDTO = new QuestionDTO();
+        BeanUtils.copyProperties(question, questionDTO);
+        User user = userMapper.findByAccountId2(Integer.toString(question.getCreator()));
+        questionDTO.setUser(user);
+        return questionDTO;
     }
 }

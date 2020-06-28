@@ -109,5 +109,21 @@ public class AuthorController {
         }
         return "redirect:/";
     }
+    
+    /**
+    * @author :xlc
+    * @date: 2020-6-9
+    * @description: 退出登录
+    */
+  @GetMapping("/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response){
+    // 删除服务器端的session
+      request.getSession().removeAttribute("user");
+      // 删除cookie
+      Cookie cookie = new Cookie("token",null);
+      cookie.setMaxAge(0);
+      response.addCookie(cookie);
+        return "redirect:/";
+    }
 
 }

@@ -6,16 +6,13 @@ import com.xlc.community.community.model.Question;
 import com.xlc.community.community.model.User;
 import com.xlc.community.community.service.IQuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import java.util.Date;
 
 @Controller
 public class PublishController {
@@ -23,11 +20,6 @@ public class PublishController {
     @Autowired
     private IQuestionService  questionService;
 
-    @Autowired
-    private RedisTemplate redisTemplate;
-
-    @Autowired
-    private UserMapper userMapper;
 
     @GetMapping("/publish")
     public String publish(){
@@ -58,30 +50,7 @@ public class PublishController {
         question.setGmtCreate(System.currentTimeMillis());
         question.setGmtModified(question.getGmtCreate());
 
-        Cookie[] cookies = request.getCookies();
-        String token = null;
-        User user = null;
-        if (  cookies != null && cookies.length > 0 ) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("token")) {
-                    token = cookie.getValue();
-                    Boolean key = redisTemplate.hasKey(token);
-                    if (key == true){
-                        user = (User) redisTemplate.opsForValue().get(token);
-                        System.out.println("reids---------------------------------");
-                    }else {
-                        user = userMapper.findByTokne(token);
-                    }
-                    if (user != null) {
-                        // 登录成功  session中 写入user 对象
-                        request.getSession().setAttribute("user", user);
-                    }
-                    break;
-                }
-
-            }
-        }
-
+        User user =(User) request.getSession().getAttribute("user");
         if (user == null){
             model.addAttribute("error","用户未登录");
             return  "publish";
