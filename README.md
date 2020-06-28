@@ -25,5 +25,6 @@ https://docs.spring.io/spring-boot/docs/2.0.0.RC1/reference/htmlsingle/#boot-fea
 @PropertySource是<context:property-placeholder location="classpath:jdbc.properties"/>标签的注解版。
 @Bean是<bean>标签的注解版。
 @EnableTransactionManagement是tx:annotation-driven标签的注解版。
+# ssss
 
 
