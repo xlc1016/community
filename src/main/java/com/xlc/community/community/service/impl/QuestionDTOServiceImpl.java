@@ -5,8 +5,8 @@ import com.xlc.community.community.dto.QuestionDTO;
 import com.xlc.community.community.mapper.UserMapper;
 import com.xlc.community.community.model.Question;
 import com.xlc.community.community.model.User;
+import com.xlc.community.community.model.UserExample;
 import com.xlc.community.community.service.IQuestionService;
-import org.apache.tomcat.util.buf.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -89,10 +89,13 @@ public class QuestionDTOServiceImpl
         List<QuestionDTO> dtoList = new ArrayList<>();
 
         for (Question question : list) {
+            UserExample userExample = new UserExample();
+            userExample.createCriteria().andAccountidEqualTo(Integer.toString(question.getCreator()));
 
-            User user = userMapper.findByAccountId2(Integer.toString(question.getCreator()));
+            List<User> users = userMapper.selectByExample(userExample);
+
             QuestionDTO questionDTO = new QuestionDTO();
-            questionDTO.setUser(user);
+            questionDTO.setUser(users.get(0));
             BeanUtils.copyProperties(question,questionDTO);
             dtoList.add(questionDTO);
         }
@@ -110,8 +113,11 @@ public class QuestionDTOServiceImpl
         Question question = questionService.findById(id);
         QuestionDTO questionDTO = new QuestionDTO();
         BeanUtils.copyProperties(question, questionDTO);
-        User user = userMapper.findByAccountId2(Integer.toString(question.getCreator()));
-        questionDTO.setUser(user);
+        UserExample userExample = new UserExample();
+        userExample.createCriteria().andAccountidEqualTo(Integer.toString(question.getCreator()));
+        List<User> users = userMapper.selectByExample(userExample);
+       // User user = userMapper.findByAccountId2(Integer.toString(question.getCreator()));
+        questionDTO.setUser(users.get(0));
         return questionDTO;
     }
 }

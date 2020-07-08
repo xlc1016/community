@@ -30,7 +30,7 @@ public class ProfileController {
     public String profile(@PathVariable(name = "action") String action  , HttpServletRequest request
      ,Model model,@RequestParam(value = "currentPage" ,defaultValue = "1")Integer currentPage
             ,                   @RequestParam(value = "pageSize" ,defaultValue = "2")Integer pageSize){
-
+// 从session中获取User
         User user =(User) request.getSession().getAttribute("user");
 
         if (user == null){
@@ -44,7 +44,7 @@ public class ProfileController {
             model.addAttribute("selection","replacs");
             model.addAttribute("selectionName","最新回复");
         }
-        PageDTO pageDTO = questionTDOService.listByUser(user.getAccountId(), currentPage, pageSize);
+        PageDTO pageDTO = questionTDOService.listByUser(user.getAccountid(), currentPage, pageSize);
 
         model.addAttribute("PropageDTO",pageDTO);
 

@@ -30,5 +30,6 @@ public interface QuestionMapper {
 
     // 根据id查询
     Question findById(@Param("id") Integer id);
-
+    //更新
+    void update(Question question);
 }

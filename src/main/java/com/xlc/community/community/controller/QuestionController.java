@@ -15,6 +15,8 @@ public class QuestionController {
     @Autowired
     private QuestionDTOServiceImpl questionTDOService;
 
+    
+
     @GetMapping("/question/{id}")
     public String question(@PathVariable(name = "id") Integer id  , Model model){
 
@@ -22,8 +24,6 @@ public class QuestionController {
 
         model.addAttribute("questionDTO",questionDTO);
         model.addAttribute("creator" ,Integer.toString(questionDTO.getCreator()));
-     //   model.addAttribute("accountId",questionDTO.getUser().getAccountId());
-
 
         return "question";
     }

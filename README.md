@@ -35,6 +35,6 @@ CREATE TABLE USER (
 	gmtModified BIGINT,
 	avatarUrl VARCHAR (100)
 );
-
-
+#执行generator
+mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
 

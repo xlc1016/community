@@ -2,7 +2,6 @@ package com.xlc.community.community;
 
 import com.xlc.community.community.mapper.UserMapper;
 import com.xlc.community.community.model.User;
-import com.xlc.community.community.util.RedisUtil;
 import org.junit.jupiter.api.Test;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 
-import java.util.Date;
 import java.util.UUID;
 
 @SpringBootTest
@@ -33,9 +31,9 @@ class CommunityApplicationTests {
 		User user = new User();
 		user.setToken(UUID.randomUUID().toString());
 		user.setName("xlc");
-		user.setAccountId("123366455");
-		user.setGmtCreate(new Date());
-		user.setGmtModified(user.getGmtCreate());
+//		user.setAccountId("123366455");
+//		user.setGmtCreate(new Date());
+//		user.setGmtModified(user.getGmtCreate());
         ValueOperations valueOperations = redisTemplate.opsForValue();
         valueOperations.set("getHubUser", user);
 

@@ -2,9 +2,6 @@ package com.xlc.community.community.dto;
 
 import com.xlc.community.community.model.User;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-
 /**
 * @author :xlc
 * @date: 2020-5-28

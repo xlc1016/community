@@ -63,4 +63,20 @@ public class QuestionServiceImpl implements IQuestionService {
     public Question findById(Integer id) {
         return questionMapper.findById(id);
     }
+
+    @Override
+    public void createOrUpdate(Question question) {
+        if (question.getId() == null){
+
+            question.setGmtCreate(System.currentTimeMillis());
+            question.setGmtModified(question.getGmtCreate());
+            questionMapper.create(question);
+            // 新增
+        }else{
+            // 更新
+           question.setGmtModified(System.currentTimeMillis());
+            questionMapper.update(question);
+
+        }
+    }
 }

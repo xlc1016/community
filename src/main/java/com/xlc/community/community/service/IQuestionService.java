@@ -26,4 +26,6 @@ public interface IQuestionService {
                                   @Param("pageSize") Integer pageSize);
     // 根据id查询
     Question findById(@Param("id") Integer id);
+    // 新增或是更新
+    void createOrUpdate(Question question);
 }

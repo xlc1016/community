@@ -49,8 +49,7 @@
     <select id="findById" resultMap="questionMap">
         select *  from  question   where  1=1 and  id= #{id} ;
     </select>
-
-
-
-
+    <update id="update" parameterType="com.xlc.community.community.model.Question" >
+        update question SET title = #{title},description = #{description},gmt_modified=#{gmtModified},tag = #{tag} where  id = #{id};
+    </update>
 </mapper>

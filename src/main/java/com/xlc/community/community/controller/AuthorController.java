@@ -3,22 +3,21 @@ package com.xlc.community.community.controller;
 import com.xlc.community.community.dto.AccessTokenDTO;
 import com.xlc.community.community.mapper.UserMapper;
 import com.xlc.community.community.model.User;
+import com.xlc.community.community.model.UserExample;
 import com.xlc.community.community.provider.GitHubProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.amqp.RabbitProperties;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.thymeleaf.util.StringUtils;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -68,27 +67,36 @@ public class AuthorController {
             githubUser = gitHubProvider.getUser(token);
         }
         // 判断对象 不为空登录成功
+
         if (githubUser != null) {
             String token1 = null;
-            User user ;
+
             if (githubUser.getId() != null) {
                 // 先查询数据库中是否存入改用户信息
-                user = userMapper.findByAccountId(githubUser.getId());
-                if (user != null) {
-                    token1 = user.getToken();
-                    user.setGmtModified(new Date());
-                    userMapper.update(user);
+                UserExample userExample = new UserExample();
+                userExample.createCriteria().andAccountidEqualTo(Long.toString(githubUser.getId()));
+                List<User> users = userMapper.selectByExample(userExample);
+
+                if (users.size() != 0) {
+                   token1 = users.get(0).getToken();
+                   User updateUser = new User();
+                   updateUser.setGmtmodified(new Date());
+                   updateUser.setName(users.get(0).getName());
+                   updateUser.setToken(users.get(0).getToken());
+                   updateUser.setAvatarurl(users.get(0).getAvatarurl());
+                   UserExample userExample1 = new UserExample();
+                   userExample1.createCriteria().andIdEqualTo(users.get(0).getId());
+                   userMapper.updateByExampleSelective(updateUser,userExample1);
                 } else {
                     // 将数据存入数据库
-                    user = new User();
+                    User user  = new User();
                     token1 = UUID.randomUUID().toString();
                     user.setToken(token1);
-                    user.setAccountId(String.valueOf(githubUser.getId()));
+                    user.setAccountid(Long.toString(githubUser.getId()));
                     user.setName(githubUser.getName());
-                    user.setGmtCreate(new Date());
-                    user.setGmtModified(user.getGmtCreate());
-                    user.setAvatarUrl(githubUser.getAvatarUrl());
-                    user.setBio(githubUser.getBio());
+                    user.setGmtcreate(new Date());
+                    user.setGmtmodified(user.getGmtcreate());
+                    user.setAvatarurl(githubUser.getAvatarUrl());
                     userMapper.insert(user);
                     // 同时将用户信息存入到redis 中
                     ValueOperations valueOperations = redisTemplate.opsForValue();
