@@ -1,7 +1,6 @@
 package com.xlc.community.community.service;
 
 import com.xlc.community.community.model.Question;
-import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;

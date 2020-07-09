@@ -2,6 +2,8 @@ package com.xlc.community.community.service.impl;
 
 import com.xlc.community.community.dto.PageDTO;
 import com.xlc.community.community.dto.QuestionDTO;
+import com.xlc.community.community.exception.CustomizeErrorCode;
+import com.xlc.community.community.exception.CustomizeExecption;
 import com.xlc.community.community.mapper.UserMapper;
 import com.xlc.community.community.model.Question;
 import com.xlc.community.community.model.User;
@@ -111,6 +113,10 @@ public class QuestionDTOServiceImpl
 
     public QuestionDTO findById(Integer id) {
         Question question = questionService.findById(id);
+        if (question == null){
+          throw  new CustomizeExecption(CustomizeErrorCode.QUSTION_NOT_FOUND);
+
+        }
         QuestionDTO questionDTO = new QuestionDTO();
         BeanUtils.copyProperties(question, questionDTO);
         UserExample userExample = new UserExample();

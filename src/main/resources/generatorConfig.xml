@@ -15,6 +15,7 @@
     <!-- targetRuntime：设置生成的文件适用于那个 mybatis 版本 -->
     <context id="default" targetRuntime="MyBatis3">
 
+        <!--生成分页的插件-->
         <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"></plugin>
         <!--optional,指在创建class时，对注释进行控制-->
         <commentGenerator>
@@ -50,7 +51,8 @@
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.xlc.community.community.mapper" targetProject="src/main/java">
         </javaClientGenerator>
         <!-- tableName是数据库中的表名，domainObjectName是生成的JAVA模型名，后面的参数不用改，要生成更多的表就在下面继续加table标签 -->
-        <table tableName="user" domainObjectName="User"></table>
+        <!--<table tableName="user" domainObjectName="User"></table>-->
+        <table tableName="question" domainObjectName="Question"></table>
 
     </context>
 </generatorConfiguration>
