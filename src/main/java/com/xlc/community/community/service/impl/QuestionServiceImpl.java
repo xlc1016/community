@@ -1,5 +1,8 @@
 package com.xlc.community.community.service.impl;
 
+import com.xlc.community.community.exception.CustomizeErrorCode;
+import com.xlc.community.community.exception.CustomizeExecption;
+import com.xlc.community.community.mapper.QuestionExtMapper;
 import com.xlc.community.community.mapper.QuestionMapper;
 import com.xlc.community.community.model.Question;
 import com.xlc.community.community.model.QuestionExample;
@@ -17,6 +20,9 @@ public class QuestionServiceImpl implements IQuestionService {
 
     @Autowired
     private QuestionMapper questionMapper;
+
+    @Autowired
+    private QuestionExtMapper questionExtMapper;
 
     @Override
     public void create(Question question) {
@@ -93,5 +99,18 @@ public class QuestionServiceImpl implements IQuestionService {
             int i = questionMapper.updateByExampleSelective(updateQuestion, questionExample);
 
         }
+    }
+   /**
+    *@创建人 xlc
+    *@创建时间 2020-7-9
+    *@描述  更新浏览次数
+    **/
+    @Override
+    public void updateViewCount(Integer id) {
+
+        Question question = new Question();
+        question.setId(id);
+        question.setViewCount(1);
+        questionExtMapper.incView(question);
     }
 }

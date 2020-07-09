@@ -22,6 +22,9 @@ public class QuestionController {
 
         QuestionDTO questionDTO = questionTDOService.findById(id);
 
+        // 更新浏览次数
+        questionTDOService.updateViewCount(id);
+
         model.addAttribute("questionDTO",questionDTO);
         model.addAttribute("creator" ,Integer.toString(questionDTO.getCreator()));
 

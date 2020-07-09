@@ -126,4 +126,12 @@ public class QuestionDTOServiceImpl
         questionDTO.setUser(users.get(0));
         return questionDTO;
     }
+  /**
+   *@创建人 xlc
+   *@创建时间 2020-7-9
+   *@描述 更新浏览次数
+   **/
+    public void updateViewCount(Integer id) {
+        questionService.updateViewCount(id);
+    }
 }

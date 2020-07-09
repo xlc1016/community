@@ -27,4 +27,6 @@ public interface IQuestionService {
     Question findById(@Param("id") Integer id);
     // 新增或是更新
     void createOrUpdate(Question question);
+
+    void updateViewCount(Integer id);
 }
