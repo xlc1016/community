@@ -35,6 +35,19 @@ CREATE TABLE USER (
 	gmtModified BIGINT,
 	avatarUrl VARCHAR (100)
 );
+#创建comment sql
+CREATE TABLE `comment` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `parent_id` int(11) NOT NULL,
+  `type` int(11) NOT NULL,
+  `commentator` int(11) NOT NULL,
+  `gmt_create` bigint(20) NOT NULL,
+  `gmt_modified` bigint(20) NOT NULL,
+  `like_count` int(11) DEFAULT '0',
+  `content` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+
 #执行generator
 mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
 
