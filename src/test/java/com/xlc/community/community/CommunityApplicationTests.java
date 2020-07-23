@@ -1,5 +1,6 @@
 package com.xlc.community.community;
 
+import com.xlc.community.community.mapper.LogInfoMapper;
 import com.xlc.community.community.mapper.UserMapper;
 import com.xlc.community.community.model.User;
 import org.junit.jupiter.api.Test;
@@ -25,6 +26,11 @@ class CommunityApplicationTests {
 	@Autowired
     private RedisTemplate redisTemplate;
 
+
+	@Autowired
+	private LogInfoMapper mapper;
+
+
 	@Test
 	public void insert(){
 
@@ -49,5 +55,8 @@ class CommunityApplicationTests {
             System.out.println(user.getName());
         }
     }
+
+
+
 
 }

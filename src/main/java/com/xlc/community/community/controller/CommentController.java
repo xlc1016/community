@@ -29,8 +29,6 @@ public class CommentController {
     @RequestMapping(value = "/comment",method = RequestMethod.POST)
 
     public Object postComment(@RequestBody CommentDTO commentDTO, HttpServletRequest request){
-
-        ResultDTO resultDTO = new ResultDTO();
         User user =(User) request.getSession().getAttribute("user");
         if (StringUtils.isEmpty(user)){
             return ResultDTO.errorOf(CustomizeErrorCode.NOT_LOGIN);
@@ -45,7 +43,7 @@ public class CommentController {
         comment.setCommentator(Integer.parseInt(user.getAccountid()));
         comment.setLikeCount(0);
         commentService.create(comment);
-        return resultDTO;
+        return ResultDTO.okOf();
 
     }
 

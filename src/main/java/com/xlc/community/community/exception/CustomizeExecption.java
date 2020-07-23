@@ -7,13 +7,15 @@ package com.xlc.community.community.exception;
  **/
 public class CustomizeExecption extends RuntimeException{
     private String message;
+    private Integer code;
 
     public CustomizeExecption(String message) {
         this.message = message;
     }
 
     public CustomizeExecption(ICustomizeErrorCode code) {
-        message = code.getMessage();
+       this.code = code.code();
+       this.message = code.getMessage();
 
     }
 
@@ -21,4 +23,10 @@ public class CustomizeExecption extends RuntimeException{
     public String getMessage() {
         return message;
     }
+
+
+    public Integer getCode() {
+        return code;
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.xlc.community.community.dto;
 
 import com.xlc.community.community.exception.CustomizeErrorCode;
+import com.xlc.community.community.exception.CustomizeExecption;
 import lombok.Data;
 
 /**
@@ -24,5 +25,24 @@ public class ResultDTO
     public static  ResultDTO errorOf(CustomizeErrorCode customizeErrorCode){
 
         return errorOf(customizeErrorCode.code(),customizeErrorCode.getMessage());
+
+
     }
+
+    public static ResultDTO errorOf(CustomizeExecption e) {
+
+        return  errorOf(e.getCode(),e.getMessage());
+    }
+
+    public static ResultDTO okOf(){
+
+        ResultDTO resultDTO = new ResultDTO();
+        resultDTO.setCode(200);
+        resultDTO.setMessage("请求成功！！！");
+        return resultDTO;
+
+    }
+
+
+
 }

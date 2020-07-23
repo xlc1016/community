@@ -8,7 +8,9 @@ public enum CustomizeErrorCode implements  ICustomizeErrorCode{
     QUSTION_NOT_FOUND(2001,"你找的问题不存在！！！！"),
     TARGET_PARAM_NOT_FOUND(2002, "未选中任何问题或评论进行回复"),
     NOT_LOGIN(2003, "未登录，请登录后再评论！"),
-    ;
+    SYS_ERROR(2004,"服务器端异常"),
+    TYPE_PARAM_WRONG(2005,"评论类型错误或不存在"),
+    COMMENT_NOT_FOUND(2006,"评论不存在");
     private String message;
     private Integer code;
 
@@ -30,4 +32,15 @@ public enum CustomizeErrorCode implements  ICustomizeErrorCode{
         return code;
     }
 
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public Integer getCode() {
+        return code;
+    }
+
+    public void setCode(Integer code) {
+        this.code = code;
+    }
 }

@@ -6,10 +6,6 @@
 <generatorConfiguration>
     <properties resource="application.properties"/>
 
-
-
-
-
     <!-- context 是逆向工程的主要配置信息 -->
     <!-- id：起个名字 -->
     <!-- targetRuntime：设置生成的文件适用于那个 mybatis 版本 -->
@@ -23,9 +19,6 @@
             <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
             <property name="suppressAllComments" value="false"/>
         </commentGenerator>
-
-
-
         <jdbcConnection driverClass="${spring.datasource.driver-class-name}"
                         connectionURL="${spring.datasource.url}"
                         userId ="${spring.datasource.username}"
@@ -53,7 +46,8 @@
         <!-- tableName是数据库中的表名，domainObjectName是生成的JAVA模型名，后面的参数不用改，要生成更多的表就在下面继续加table标签 -->
         <!--<table tableName="user" domainObjectName="User"></table>-->
         <!--<table tableName="question" domainObjectName="Question"></table>-->
-        <table tableName="comment" domainObjectName="Comment"></table>
+        <!--<table tableName="comment" domainObjectName="Comment"></table>-->
+        <table tableName="logInfo" domainObjectName="LogInfo"></table>
 
     </context>
 </generatorConfiguration>
