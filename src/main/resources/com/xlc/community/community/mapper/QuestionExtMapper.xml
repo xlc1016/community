@@ -25,7 +25,7 @@
     <update id="incComment" parameterType="com.xlc.community.community.model.Question">
         update question
         set
-        view_count = comment_count + #{commentCount ,jdbcType=INTEGER}
+        comment_count = comment_count + #{commentCount ,jdbcType=INTEGER}
         where id = #{id,jdbcType=INTEGER}
     </update>
 

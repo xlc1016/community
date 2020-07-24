@@ -27,7 +27,6 @@ public class CommentController {
 
     @ResponseBody
     @RequestMapping(value = "/comment",method = RequestMethod.POST)
-
     public Object postComment(@RequestBody CommentDTO commentDTO, HttpServletRequest request){
         User user =(User) request.getSession().getAttribute("user");
         if (StringUtils.isEmpty(user)){
@@ -39,7 +38,6 @@ public class CommentController {
         comment.setContent(commentDTO.getContent());
         comment.setGmtCreate(System.currentTimeMillis());
         comment.setGmtModified(System.currentTimeMillis());
-        //comment.setCommentator(1);
         comment.setCommentator(Integer.parseInt(user.getAccountid()));
         comment.setLikeCount(0);
         commentService.create(comment);
