@@ -1,22 +1,27 @@
 package com.xlc.community.community.dto;
 
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.xlc.community.community.model.User;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
  *@创建人 xlc
- *@创建时间 2020-7-9
- *@描述 回复的组装类
+ *@创建时间 2020-7-27
+ *@描述
  **/
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-//@JsonInclude(JsonInclude.Include.NON_NULL)
 public class CommentDTO {
-    private Integer parentId; // 父类id
-    private String content; // 回复内容
+    private Integer id;
+    private Integer parentId;
     private Integer type;
+    private Integer commentator;
+    private Long gmtCreate;
+    private Long gmtModified;
+    private Integer likeCount;
+    private String content;
+    private User user;
 }

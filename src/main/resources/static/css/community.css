@@ -49,8 +49,21 @@ body{
 
 }
 .menu .time{
-    float: right
+      float: right
+  }
+.menu .active{
+    color: #499ef3;
 }
 .menu .icon:hover{
     color: #499ef3;
 }
+.sub-comment{
+    border: 1px solid #eee;
+    margin: 15px 0;
+    padding: 10px 5px;
+    border-radius: 10px;
+}
+.sub-commet-btn{
+    margin: 10px 14px 10px 5px;
+}
+

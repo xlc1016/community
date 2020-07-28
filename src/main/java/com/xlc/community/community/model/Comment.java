@@ -1,11 +1,12 @@
 package com.xlc.community.community.model;
 
+import org.hibernate.validator.constraints.pl.REGON;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.Table;
 
 @Repository
-@Table(name = "Comment")
+@Table(name = "comment")
 public class Comment {
     /**
      *
