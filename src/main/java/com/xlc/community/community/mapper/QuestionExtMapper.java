@@ -14,4 +14,6 @@ public interface QuestionExtMapper {
     void incView(Question question);
 
     void incComment(Question  question);
+
+    List<Question> selectRelate(Question question);
 }

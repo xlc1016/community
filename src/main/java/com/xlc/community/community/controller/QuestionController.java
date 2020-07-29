@@ -29,6 +29,7 @@ public class QuestionController {
     public String question(@PathVariable(name = "id") Integer id  , Model model){
 
         QuestionDTO questionDTO = questionTDOService.findById(id);
+        List<QuestionDTO> relatedQuestions = questionTDOService.selectRelate(questionDTO);
         // 回复内容
         List<CommentDTO> commentDTOList = commentService.listByTargetId(id, CommentTypeEnum.COMMENT);
 
@@ -38,6 +39,7 @@ public class QuestionController {
         model.addAttribute("questionDTO",questionDTO);
         model.addAttribute("commentDTO",commentDTOList);
         model.addAttribute("creator" ,Integer.toString(questionDTO.getCreator()));
+        model.addAttribute("relatedQuestions" ,relatedQuestions);
 
         return "question";
     }

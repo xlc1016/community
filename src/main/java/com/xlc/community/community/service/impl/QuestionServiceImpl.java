@@ -43,7 +43,9 @@ public class QuestionServiceImpl implements IQuestionService {
     @Override
     public List<Question> pageList(Integer currentPage, Integer pageSize) {
 
-        List<Question> list = questionMapper.selectByExampleWithBLOBsWithRowbounds(new QuestionExample(),new RowBounds(currentPage,pageSize));
+         QuestionExample example = new QuestionExample();
+         example.setOrderByClause("gmt_create desc");
+        List<Question> list = questionMapper.selectByExampleWithBLOBsWithRowbounds(example,new RowBounds(currentPage,pageSize));
         return list;
     }
 

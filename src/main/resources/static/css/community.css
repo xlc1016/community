@@ -66,4 +66,12 @@ body{
 .sub-commet-btn{
     margin: 10px 14px 10px 5px;
 }
+.qustion-tag{
+    margin-right: 5px;
+}
+.qustion-related{
+    list-style: none;
+    padding-left: 0;
+    font-size: 15px;
+}
 

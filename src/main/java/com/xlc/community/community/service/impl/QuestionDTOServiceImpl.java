@@ -4,17 +4,23 @@ import com.xlc.community.community.dto.PageDTO;
 import com.xlc.community.community.dto.QuestionDTO;
 import com.xlc.community.community.exception.CustomizeErrorCode;
 import com.xlc.community.community.exception.CustomizeExecption;
+import com.xlc.community.community.mapper.QuestionExtMapper;
 import com.xlc.community.community.mapper.UserMapper;
 import com.xlc.community.community.model.Question;
 import com.xlc.community.community.model.User;
 import com.xlc.community.community.model.UserExample;
 import com.xlc.community.community.service.IQuestionService;
+import org.apache.tomcat.util.buf.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+
 @Service
 public class QuestionDTOServiceImpl
 {
@@ -24,6 +30,9 @@ public class QuestionDTOServiceImpl
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private QuestionExtMapper questionExtMapper;
 
 
     public PageDTO findAll(Integer currentPage,Integer pageSize ) {
@@ -133,5 +142,32 @@ public class QuestionDTOServiceImpl
    **/
     public void updateViewCount(Integer id) {
         questionService.updateViewCount(id);
+    }
+
+/**
+ *@创建人 xlc
+ *@创建时间 2020-7-29
+ *@描述 相关问题关联查询 使用正则表达式
+ **/
+    public List<QuestionDTO> selectRelate(QuestionDTO queryDTO) {
+        if (org.springframework.util.StringUtils.isEmpty(queryDTO)){
+            return  new ArrayList<>();
+        }
+        String tags = null;
+        if (queryDTO.getTag().contains(",")) {
+            tags = queryDTO.getTag().replaceAll(",", "|");
+        }else{
+            tags = queryDTO.getTag();
+        }
+        Question question = new Question() ;
+        question.setId(queryDTO.getId());
+        question.setTag(tags);
+        List<Question> list =questionExtMapper.selectRelate(question);
+        List<QuestionDTO> questionDTOS = list.stream().map(q -> {
+            QuestionDTO questionDTO = new QuestionDTO();
+            BeanUtils.copyProperties(q,questionDTO);
+            return questionDTO;
+        }).collect(Collectors.toList());
+        return questionDTOS;
     }
 }

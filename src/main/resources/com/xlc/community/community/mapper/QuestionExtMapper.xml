@@ -28,5 +28,9 @@
         comment_count = comment_count + #{commentCount ,jdbcType=INTEGER}
         where id = #{id,jdbcType=INTEGER}
     </update>
+    
+    <select id="selectRelate" parameterType="com.xlc.community.community.model.Question" resultMap="BaseResultMap">
+        select * from question where  tag REGEXP #{tag} and id != #{id}
+    </select>
 
 </mapper>
