@@ -74,4 +74,10 @@ body{
     padding-left: 0;
     font-size: 15px;
 }
+.publish-tag{
+    cursor: pointer;
+}
+.active tab-pane{
+    margin-top: 6px;
+}
 

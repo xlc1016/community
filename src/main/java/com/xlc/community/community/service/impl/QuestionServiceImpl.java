@@ -71,6 +71,7 @@ public class QuestionServiceImpl implements IQuestionService {
 
         QuestionExample questionExample = new QuestionExample();
         questionExample.createCriteria().andCreatorEqualTo(creator);
+        questionExample.setOrderByClause(" gmt_create  desc");
 
         List<Question> list = questionMapper.selectByExampleWithBLOBsWithRowbounds(questionExample,new RowBounds(currentPage,pageSize));
         return list;

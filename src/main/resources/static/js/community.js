@@ -137,3 +137,26 @@ function commentToTarget(targetId,type,content) {
     
 }
 
+/**
+ * 点击选择标签
+ * @param value
+ */
+function selectTag(e) {
+    var value = e.getAttribute("data-tag");
+    console.log(value)
+    //debugger;
+    var startValue = $('#tag').val();
+    if (startValue) {
+        // 不为空的时候
+        var strings = startValue.split(',');
+        if (strings.indexOf(value) == -1) {
+            // 如果标签中包含了  就不再添加到标签中
+            $('#tag').val(startValue + ',' + value);
+
+        }
+    } else {
+        $('#tag').val(value)
+    }
+
+}
+

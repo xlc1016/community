@@ -29,6 +29,9 @@
                         <span th:text="${question.commentCount}"></span>个回复.
                         <span th:text="${question.viewCount}"></span>浏览次数.
                         <span th:text="${#dates.format(question.gmtCreate,'yyyy-MM-dd')}"></span>
+                         <span class="glyphicon glyphicon-pencil">
+                             <a th:href="@{'/publish/'+${question.id}} ">编辑</a>
+                         </span>
                     </span>
                 </div>
             </div>
