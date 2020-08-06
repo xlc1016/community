@@ -30,9 +30,7 @@ public class NotificationController {
         if (StringUtils.isEmpty(user)){
             return "redirect:/";
         }
-
          NotificationDTO notificationDTO = notificationTDOService.read(id, user);
-
 
         if (NotificationTypeEnum.REPALY_COMMONT.getType() == notificationDTO.getType()
                 || NotificationTypeEnum.REPALY_QUESTION.getType() == notificationDTO.getType()) {
