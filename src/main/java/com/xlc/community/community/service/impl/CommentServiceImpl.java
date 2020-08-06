@@ -2,12 +2,11 @@ package com.xlc.community.community.service.impl;
 
 import com.xlc.community.community.dto.CommentDTO;
 import com.xlc.community.community.enums.CommentTypeEnum;
+import com.xlc.community.community.enums.NotificationStatusEnum;
+import com.xlc.community.community.enums.NotificationTypeEnum;
 import com.xlc.community.community.exception.CustomizeErrorCode;
 import com.xlc.community.community.exception.CustomizeExecption;
-import com.xlc.community.community.mapper.CommentMapper;
-import com.xlc.community.community.mapper.QuestionExtMapper;
-import com.xlc.community.community.mapper.QuestionMapper;
-import com.xlc.community.community.mapper.UserMapper;
+import com.xlc.community.community.mapper.*;
 import com.xlc.community.community.model.*;
 import com.xlc.community.community.service.ICommentService;
 import org.springframework.beans.BeanUtils;
@@ -44,10 +43,12 @@ public class CommentServiceImpl implements ICommentService {
 
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private  NotificationMapper notificationMappe;
 
     @Transactional
     @Override
-    public void create(Comment comment) {
+    public void create(Comment comment ,User user) {
 
         if (StringUtils.isEmpty(comment.getParentId())) {
             // 父类id 为空的时候抛出异常
@@ -59,19 +60,15 @@ public class CommentServiceImpl implements ICommentService {
             throw  new CustomizeExecption(CustomizeErrorCode.TYPE_PARAM_WRONG);
 
         }
-
         if (comment.getType() == CommentTypeEnum.COMMENT.getType()){
-            // 回复评论
-//            CommentExample commentExample = new CommentExample();
-//            commentExample.createCriteria().andParentIdEqualTo(comment.getParentId());
-//            List<Comment> dbComment = commentMapper.selectByExample(commentExample);
-//            if (StringUtils.isEmpty(dbComment)){
-//                throw new  CustomizeExecption(CustomizeErrorCode.COMMENT_NOT_FOUND);
-//            }
             Question question = questionMapper.selectByPrimaryKey(comment.getParentId());
             question.setCommentCount(1);
             questionExtMapper.incComment(question);
             int i = commentMapper.insert(comment);
+
+            // 创建通知
+            createNotif(comment, question.getCreator(), user.getName(), question.getTitle(), NotificationTypeEnum.REPALY_COMMONT, question.getId());
+
         }else{
            // 回复问题
              Comment comment1 = commentMapper.selectByPrimaryKey(comment.getParentId());
@@ -82,6 +79,11 @@ public class CommentServiceImpl implements ICommentService {
             int i = commentMapper.insert(comment);
             question.setCommentCount(1);
             questionExtMapper.incComment(question);
+
+            // 创建通知
+
+            createNotif(comment, question.getCreator(), user.getName(), question.getTitle(), NotificationTypeEnum.REPALY_QUESTION, question.getId());
+
         }
 
 
@@ -130,5 +132,24 @@ public class CommentServiceImpl implements ICommentService {
         }
 
         return commentDTOList;
+    }
+
+    // 创建通知
+    private void createNotif(Comment comment , int accountid , String notifName, String outerTitle,
+                             NotificationTypeEnum typeEnum,int outerid ){
+
+//        if (comment.getCommentator()  == accountid){
+//            return;
+//        }
+        Notification notification  = new Notification();
+        notification.setGmtCreate(System.currentTimeMillis()); // 创建时间
+        notification.setNotifier(comment.getCommentator()); // userId
+        notification.setReceiver(accountid); //   userId
+        notification.setOuterid(outerid); // 问题id
+        notification.setStatus(NotificationStatusEnum.UNREAD.getStatus()); // 状态 默认未读
+        notification.setOuterTitle(outerTitle);
+        notification.setNotifierName(notifName);
+        notification.setType(typeEnum.getType());
+        notificationMappe.insert(notification);
     }
 }

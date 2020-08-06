@@ -1,8 +1,11 @@
 package com.xlc.community.community.controller;
 
 
+import com.xlc.community.community.dto.NotificationDTO;
 import com.xlc.community.community.dto.PageDTO;
+import com.xlc.community.community.model.Notification;
 import com.xlc.community.community.model.User;
+import com.xlc.community.community.service.impl.NotificationTDOServiceImpl;
 import com.xlc.community.community.service.impl.QuestionDTOServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,8 +22,8 @@ public class ProfileController {
     @Autowired
     private QuestionDTOServiceImpl questionTDOService;
 
-
-
+    @Autowired
+    private NotificationTDOServiceImpl notificationTDOService;
     /**
     * @author :xlc
     * @date: 2020-6-5
@@ -36,18 +39,21 @@ public class ProfileController {
         if (user == null){
             return "redirect:/";
         }
-
         if ("questions".equals(action)){
             model.addAttribute("selection","questions");
             model.addAttribute("selectionName","我的问题");
+            PageDTO pageDTO = questionTDOService.listByUser(user.getAccountid(), currentPage, pageSize);
+            model.addAttribute("PropageDTO",pageDTO);
         }else if("replacs".equals(action)){
             model.addAttribute("selection","replacs");
             model.addAttribute("selectionName","最新回复");
+           PageDTO<NotificationDTO> pageDTO  = notificationTDOService.listByUser(user.getAccountid(), currentPage, pageSize);
+            model.addAttribute("PropageDTO",pageDTO);
+            // 获取未读数
+          //  int  unReadNum = notificationTDOService.countByUserForUNRead(Integer.parseInt(user.getAccountid()));
+            int unReadNum  = (int) request.getSession().getAttribute("unRead");
+            model.addAttribute("unReadNum",unReadNum);
         }
-        PageDTO pageDTO = questionTDOService.listByUser(user.getAccountid(), currentPage, pageSize);
-
-        model.addAttribute("PropageDTO",pageDTO);
-
 
         return  "profile";
     }

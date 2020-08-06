@@ -26,6 +26,9 @@
                     <li th:if="${session.user != null}">
                         <a href="/publish">问题</a>
                     </li>
+                    <li >
+                        <a href="/profile/replacs">通知 <span class="badge" th:text="${session.unRead}"></span></a>
+                    </li>
                     <li id="dropdown1" class="dropdown" th:if="${session.user != null}">
                         <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                             aria-expanded="false" id="dropdown2">

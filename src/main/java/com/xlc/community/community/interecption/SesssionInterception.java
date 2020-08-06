@@ -1,9 +1,11 @@
 package com.xlc.community.community.interecption;
 
 
+import com.xlc.community.community.mapper.NotificationMapper;
 import com.xlc.community.community.mapper.UserMapper;
 import com.xlc.community.community.model.User;
 import com.xlc.community.community.model.UserExample;
+import com.xlc.community.community.service.INotificationTDOService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -23,6 +25,8 @@ public class SesssionInterception implements HandlerInterceptor {
 
     @Autowired
     private RedisTemplate redisTemplate;
+    @Autowired
+    private INotificationTDOService notificationTDOService;
 // 程序处理之前做
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -46,7 +50,11 @@ public class SesssionInterception implements HandlerInterceptor {
                         if (users.size()> 0 && users  != null) {
                             // 登录成功  session中 写入user 对象
                             request.getSession().setAttribute("user", users.get(0));
+                            int unRead = notificationTDOService.countByUserForUNRead(Integer.parseInt(users.get(0).getAccountid()));
+                            request.getSession().setAttribute("unRead",unRead);
                         }
+
+
                     }
                     break;
                 }
