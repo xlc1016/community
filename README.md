@@ -51,3 +51,4 @@ CREATE TABLE `comment` (
 #执行generator
 mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate
 
+#测试github 链接1111
